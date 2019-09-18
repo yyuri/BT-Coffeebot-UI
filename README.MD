@@ -1,4 +1,4 @@
-Thebluetooth Plantbot
+A browser interface to operate the CoffeePlantbot via Bluetooth
 ---------------------
 A UI to control The CoffeePlantBot smart garden via bluetooth using a browser accesible interface
 
