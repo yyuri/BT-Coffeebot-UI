@@ -1,0 +1,55 @@
+header{
+}
+body {
+  font-family: 'Play', sans-serif;
+  background: #222;
+  color: #999;
+}
+h5 {
+  color: #black;
+}
+h3 {
+  color: #black;
+}
+.red{
+  background:white;
+  text-align: center;
+  border: 1px;
+  border-bottom: 1px solid #5e4708;
+  background: #222;
+    
+}
+.tot{
+  width: 100%;
+  text-align: center;
+  background: #222;
+}
+.large{
+  height: 500px;
+}
+.padl{
+  border-left: 1px solid black;
+}
+.padr{
+  border-right: 1px solid black;
+}
+.heading {
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+.bulbon{
+  color: #fcba03;
+}
+.wateron {
+  color: #5199c9;
+}
+
+.col-half {
+  width: 50%;
+  float: left;
+}
+
+.knob-wrapper {
+  text-align: center;
+  margin-top: 15px;
+}
