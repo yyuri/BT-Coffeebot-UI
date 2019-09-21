@@ -1,36 +1,260 @@
-
+<!DOCTYPE html>
+<html lang="en" xml:lang="en">
+	<meta charset="utf-8">
 <!-- Structure -->
 <head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js" type="text/javascript"></script>
+<script src="/js/bt2.js" type="text/javascript"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet" />
+<link href="https://theplantbot.com/css/style2.css" rel="stylesheet" />
   <div class="header red">
     <img src="https://theplantbot.com/wp-content/uploads/2019/06/Logotipo-horizontal-e1561899770504.png" alt="My Logo">
   </div>
 </head>
 
+<body id="tot">
 
-<body>
-<div class="container tot">
-  <div class="row justify-content-around large">
-    <div class="col-6 padr">
-      <p class="h3 heading">Light control</p>
-       <i class="fas fa-lightbulb fa-9x" id="bulb"></i>
-    <div class="row light-wrapper">
-    <div class="col-half knob-wrapper">
-      <h5><u>Daily hours</u></h5>
-      <input type="text" value="14" size="5" class="day-knob" />
+<div class="container">
+
+  <div class="row justify-content-around">
+    <div class="col-lg-2 col-md-4 col-sm-6 order-lg-1 order-md-4 padrr">
+      <p class="h3 heading hd-tx2">Bluetooth</p>
+      <i class="fab fa-bluetooth fa-3x knob-wrapper" id="startNotifications"></i>
     </div>
+
+  <div class="col-lg-4 col-md-9 col-sm-12 order-lg-2 order-md-1">
+    <p class="h3 heading hd-tx">Light control</p>
+    <i class="fas fa-lightbulb fa-7x knob-wrapper" id="bulb" /></i>
+    <div class="div light-wrapper ">
     <div class="col-half knob-wrapper">
-      <h5>Dark hours</h5>
-      <input type="text" value="8" size="5" class="night-knob" />
+      <h5 class="heading1">Daily hours</h5>
+      <input type="text" value="14" size="5" class="day-knob" />
+      </div>
+    <div class="col-half knob-wrapper">
+      <h5 class="heading1">Dark hours</h5>
+      <input type="text" value="8" size="5" class="night-knob"/>
     </div>
   </div>
  </div>
-    
-    
-    <div class="col-6 padl ml-auto">
-     <p class="h3 heading">Water control</p>
-       <i class="fas fa-cloud-rain fa-9x" id="water"></i>
+
+
+    <div class="col-lg-4 col-md-9 col-sm-12 padl order-lg-3 order-md-2">
+     <p class="h3 heading hd-tx2">Water control</p>
+       <i class="fas fa-cloud-rain fa-7x knob-wrapper" id="water"></i>
+    <div class="row light-wrapper">
+    <div class="col-half knob-wrapper">
+      <h5 class="heading1">Pulse (in seconds)</h5>
+      <input type="text" value="14" size="5" class="pulse-knob" />
+    </div>
+    <div class="col-half knob-wrapper">
+      <h5 class="heading1">Humidity threshold</h5>
+      <input type="text" value="8" size="5" class="threshold-knob">
+    </div>
+  </div>
     </div>
 
+    <div class="col-lg-2 col-md-4 col-sm-6 padll soil order-lg-4 order-md-3">
+     <p class="h3 heading hd-tx2">Soil humity</p>
+
+      <i class="fas fa-tint fa-3x iconh knob-wrapper" id="humidity"></i>
+      <h3 id="percent">%</h3>
+
+      <div class="knob-wraper"><input type="text" value="8" size="5" class="humidity-knob" /></div>
+      </div>
+    </div>
+
+
+<div class="row">
+		<div class="col-12 ">
+		<form class="hidd">
+		  <input id="service" type="text" list="services" autofocus placeholder="Bluetooth Service" value="0000ffe0-0000-1000-8000-00805f9b34fb">
+		  <input id="characteristic" type="text" list="characteristics" placeholder="Bluetooth Characteristic" value="0000ffe1-0000-1000-8000-00805f9b34fb">
+		  <button id="">Start notifications</button>
+		  <button id="stopNotifications">Stop notifications</button>
+		</form>
+		<datalist id="services">
+		  <option value="0000ffe0-0000-1000-8000-00805f9b34fb">The Coffee Bot Service</option>
+		</datalist>
+
+		<datalist id="characteristics">
+		  <option value="0000ffe1-0000-1000-8000-00805f9b34fb">The Coffe Bot Charateristics</option>
+		</datalist>
+
+
+		<h3>Live Output</h3>
+		<div id="output" class="night">
+		  <div id="content"></div>
+		  <div id="status"></div>
+		  <pre id="log" class="night"></pre>
+		</div>
+		</div>
+</div>
+
+
+		<script type="text/javascript">
+			// Add a global error event listener early on in the page load, to help ensure that browsers
+			// which don't support specific functionality still end up displaying a meaningful message.
+			window.addEventListener('error', function(error) {
+				if (ChromeSamples && ChromeSamples.setStatus) {
+					console.error(error);
+					ChromeSamples.setStatus(error.message + ' (Your browser may not support this feature.)');
+					error.preventDefault();
+				}
+			});
+		var ChromeSamples = {
+			log: function() {
+				var line = Array.prototype.slice.call(arguments).map(function(argument) {
+					return typeof argument === 'string' ? argument : JSON.stringify(argument);
+				}).join(' ');
+
+				document.querySelector('#log').textContent += line + '\n';
+			},
+
+			clearLog: function() {
+				document.querySelector('#log').textContent = '';
+			},
+
+			setStatus: function(status) {
+				document.querySelector('#status').textContent = status;
+			},
+
+			setContent: function(newContent) {
+				var content = document.querySelector('#content');
+				while(content.hasChildNodes()) {
+					content.removeChild(content.lastChild);
+				}
+				content.appendChild(newContent);
+			}
+		};
+
+		if (/Chrome\/(\d+\.\d+.\d+.\d+)/.test(navigator.userAgent)){
+			// Let's log a warning if the sample is not supposed to execute on this
+			// version of Chrome.
+			if (48 > parseInt(RegExp.$1)) {
+				ChromeSamples.setStatus('Warning! Keep in mind this sample has been tested with Chrome ' + 48 + '.');
+			}
+		}
+		var myCharacteristic;
+
+		function onStartButtonClick() {
+			$(".startNotifications").addClass('bluet');
+
+		let serviceUuid = document.querySelector('#service').value;
+		if (serviceUuid.startsWith('0x')) {
+			serviceUuid = parseInt(serviceUuid);
+		}
+
+		let characteristicUuid = document.querySelector('#characteristic').value;
+		if (characteristicUuid.startsWith('0x')) {
+			characteristicUuid = parseInt(characteristicUuid);
+		}
+
+		log('Requesting Bluetooth Device...');
+		navigator.bluetooth.requestDevice({filters: [{services: [serviceUuid]}]})
+		.then(device => {
+			log('Connecting to GATT Server...');
+			return device.gatt.connect();
+		})
+		.then(server => {
+			log('Getting Service...');
+			return server.getPrimaryService(serviceUuid);
+		})
+		.then(service => {
+			log('Getting Characteristic...');
+			return service.getCharacteristic(characteristicUuid);
+		})
+		.then(characteristic => {
+			myCharacteristic = characteristic;
+			return myCharacteristic.startNotifications().then(_ => {
+				log('> Notifications started');
+				myCharacteristic.addEventListener('characteristicvaluechanged',
+						handleNotifications);
+			});
+		})
+		.catch(error => {
+			log('Argh! ' + error);
+		});
+		}
+
+		function onStopButtonClick() {
+		if (myCharacteristic) {
+			myCharacteristic.stopNotifications()
+			.then(_ => {
+				log('> Succesfully updated!');
+				myCharacteristic.removeEventListener('characteristicvaluechanged',
+						handleNotifications);
+			})
+			.catch(error => {
+				log('Argh! ' + error);
+			});
+		}
+		}
+
+		function handleNotifications(event) {
+		let decoder = new TextDecoder('utf-8');
+		let value = event.target.value;
+		let a = [];
+		a.push(decoder.decode(value));
+		b = a.toString().split("\n");
+		log(b.shift());
+		log('> ' + b.join(' '));
+		$(".humidity-knob").val(b[0]);
+		$('.threshold-knob').val(b[1]);
+		$('.pulse-knob').val(b[2]);
+		$('.night-knob').val(b[3]);
+		$('.day-knob').val(b[4]);
+		if (b[5]==0) {
+				$("#water").removeClass('wateron');
+			}
+		else {
+			$("#water").addClass('wateron');
+		}
+		if (b[6]==0) {
+				$("#bulb").removeClass('bulbon');
+			}
+		else {
+			$("#bulb").addClass('bulbon');
+		}
+		onStopButtonClick();
+		$(".startNotifications").removeClass('bluet');
+
+		}
+
+		document.querySelector('#startNotifications').addEventListener('click', function(event) {
+			event.stopPropagation();
+			event.preventDefault();
+
+			if (isWebBluetoothEnabled()) {
+				ChromeSamples.clearLog();
+				onStartButtonClick();
+			}
+		});
+		document.querySelector('#stopNotifications').addEventListener('click', function(event) {
+			event.stopPropagation();
+			event.preventDefault();
+
+			if (isWebBluetoothEnabled()) {
+				onStopButtonClick();
+			}
+		});
+		log = ChromeSamples.log;
+
+		function isWebBluetoothEnabled() {
+			if (navigator.bluetooth) {
+				return true;
+			} else {
+				ChromeSamples.setStatus('Web Bluetooth API is still in a experimental fase.\n' +
+						"If you're reading this it probably means it is not enabled or supported in your browser.");
+				return false;
+			}
+		};
+		</script>
   </div>
 </div>
 </body>
+</html>
