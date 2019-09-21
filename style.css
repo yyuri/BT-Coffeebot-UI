@@ -1,55 +1,79 @@
-header{
-}
 body {
   font-family: 'Play', sans-serif;
   background: #222;
   color: #999;
 }
-h5 {
-  color: #black;
+.heading {
+  border-bottom: 3px solid;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
-h3 {
-  color: #black;
+.heading1 {
+  border-radius: 0px;
+  padding: 0px;
+  border-bottom: 2px solid #595252;
+}
+.night {
+	color: #595252;
+}
+.hidd {
+	visibility: hidden;
+	display: hidden;
+}
+.switched {
+  background: #ede3ca !important;
+  color: #595252;
 }
 .red{
-  background:white;
   text-align: center;
   border: 1px;
   border-bottom: 1px solid #5e4708;
-  background: #222;
-    
 }
-.tot{
+#tot{
   width: 100%;
   text-align: center;
   background: #222;
 }
-.large{
-  height: 500px;
+.hd-tx{
+  color: #c79d28;
+}
+.hd-tx2{
+  color: #5199c9;
+}
+.hd-tx3{
+  color: #e3e6d1;
 }
 .padl{
-  border-left: 1px solid black;
+  border-left: 1px solid #5e4708;
 }
 .padr{
-  border-right: 1px solid black;
+  border-right: 1px solid #5e4708;
 }
-.heading {
-  padding-top: 10px;
-  padding-bottom: 30px;
+.padll{
+  border-left: 1px solid #5e4708;
 }
-.bulbon{
-  color: #fcba03;
+.padrr{
+  border-right: 1px solid #5e4708;
 }
 .wateron {
   color: #5199c9;
 }
-
+.bulbon{
+  color: #e0b336;
+}
+.blueton {
+  color: #287AA9;
+}
 .col-half {
   width: 50%;
   float: left;
 }
-
 .knob-wrapper {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+}
+.iconh{
+  color: rgba(81, 153, 201,0.1);
 }
