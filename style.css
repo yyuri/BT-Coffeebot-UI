@@ -1,20 +1,69 @@
 body {
-  font-family: 'Play', sans-serif;
-  background: #222;
-  color: #999;
+	margin: 0;
+	padding: 0;
+
+	font-family: 'Play', sans-serif;
+	background: #222;
+	color: #999;
+
 }
+ body.loaded {
+
+}
+.tabs {
+	 display: table;
+	 table-layout: fixed;
+	 width: 33%;
+}
+ .tabs > li {
+	 background: rgba(46, 46, 46, 0.8);
+	 transition-duration: 0.5s;
+	 display: table-cell;
+	 list-style: none;
+	 text-align: center;
+	 overflow: hidden;
+	 cursor: pointer;
+	 color: #b4aa99;
+	 border-bottom: 2px solid #2e2e2e;
+	 border-radius: 2px;
+}
+ .tabs > li.active {
+	 border-bottom: 2px solid #df9a57;
+	 color: #df9a57;
+	 background: #222;
+}
+ .tab__content {
+	 position: relative;
+	 width: 100%;
+}
+ .tab__content > li {
+	 width: 100%;
+	 position: absolute;
+	 top: 0;
+	 left: 0;
+	 display: none;
+	 list-style: none;
+}
+
 .heading {
   border-bottom: 3px solid;
   padding-top: 10px;
   padding-bottom: 5px;
 }
 .heading1 {
-  border-radius: 0px;
   padding: 0px;
   border-bottom: 2px solid #595252;
 }
+.heading2 {
+	padding-top: 10px;
+}
+.heading3{
+
+	border-bottom: 2px solid #e0b336;
+}
 .night {
 	color: #595252;
+
 }
 .hidd {
 	visibility: hidden;
@@ -23,6 +72,7 @@ body {
 .switched {
   background: #ede3ca !important;
   color: #595252;
+
 }
 .red{
   text-align: center;
@@ -43,11 +93,62 @@ body {
 .hd-tx3{
   color: #e3e6d1;
 }
+.hd-tx4{
+  color: #4b8179;
+}
 .padl{
   border-left: 1px solid #5e4708;
 }
 .padr{
   border-right: 1px solid #5e4708;
+}
+.padll{
+  border-left: 1px solid #5e4708;
+}
+.padrr{
+  border-right: 1px solid #5e4708;
+}
+.wateron {
+  color: #5199c9;
+}
+.bulbon{
+  color: #e0b336;
+}
+.startNotifications {
+  color: #287AA9;
+	animation: blueton 1s steps(9, start) infinite;
+	-webkit-animation: blueton 1s steps(9, start) infinite;
+}
+.bluetons {
+	color: #287AA9;
+	animation: blueton 1s steps(4, start) infinite;
+	-webkit-animation: blueton 1s steps(4, start) infinite;
+}
+	@keyframes blueton {
+		to {
+			visibility: hidden;
+		}
+	}
+	@-webkit-keyframes blueton {
+		to {
+			visibility: hidden;
+		}
+	}
+.col-half {
+  width: 50%;
+  float: left;
+}
+
+.knob-wrapper {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+}
+.iconh{
+  color: rgba(81, 153, 201,0.1);
+}
+
 }
 .padll{
   border-left: 1px solid #5e4708;
