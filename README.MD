@@ -1,6 +1,6 @@
 UI Web Bluetooth application to control theplantbot smartgarden Arduino
 ---------------------
-A [Browser accesible interface UI](https://theplantbot.com/bt2.html) to control The CoffeePlantBot Arduino smartgarden using Web Bluetooth:
+A [Browser accesible interface UI](https://theplantbot.com/bt.html) to control The CoffeePlantBot Arduino smartgarden using Web Bluetooth:
 
 
 
